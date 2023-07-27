@@ -1,38 +1,47 @@
 import { useEffect, useState } from 'react'
-import { AppBar, Container, Grid, Button, Box, Drawer, IconButton } from "@material-ui/core"
+import { AppBar, Typography, Button, Box, Drawer, IconButton } from "@material-ui/core"
 import { Close, Menu } from '@material-ui/icons';
 import { TR_modal } from '../TR_reusable/TR_modal';
 import { TR_createUser } from './TR_createUser';
 import { useNavigate, Outlet, NavLink } from "react-router-dom"
-import { TR_table } from '../TR_reusable/TR_table';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRegisterUser, initialStateType } from '../TR_constants';
 import { getlocalstoragedata } from '../../TR_redux/Actions';
-
+import { ImUser } from "react-icons/im";
 export const TR_userdash = () => {
-  const [userRole, setUserRole] = useState<string | null>(null)
+  const [userRole, setUserRole] = useState<IRegisterUser>({
+    id: 10,
+    Fname: "",
+    Password: "",
+    Mobile: 10,
+    Lname: "",
+    Email: "",
+    Username: "",
+    Role: 10
+  })
   const [openDrawer, setOpendrawer] = useState<boolean>(false);
   const [opoenModal, setOpenModal] = useState<boolean>(false);
   const state: any = useSelector((state: initialStateType) => state.USER_INFO)
   const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { Role, Username, Fname, Lname, Password, } = userRole
 
   useEffect(() => {
     const userRole = localStorage.getItem("userRole")
     if (userRole) {
-      setUserRole(userRole)
+      setUserRole(JSON.parse(userRole))
     }
-    console.log("userRole", typeof (userRole))
+    console.log("userRole", userRole)
     dispatch(getlocalstoragedata())
 
   }, [])
+
   return (
     <div>
       <AppBar>
-        <div className="row my-3">
-          <div className="col-md-12">
-            <Button className='float-end' onClick={() => setOpendrawer(true)}><Menu /></Button>
-          </div>
+        <div className=" my-3 d-flex justify-content-between align-items-center">
+          <div className='d-flex justify-content-center align-items-center flex-column'> <ImUser fontSize={35} /> <Typography variant="h6" className='px-3'>{`${Fname} ${Lname}`}</Typography></div>
+          <Button className='float-end' onClick={() => setOpendrawer(true)}><Menu /></Button>
         </div>
       </AppBar>
 
@@ -48,16 +57,19 @@ export const TR_userdash = () => {
         </div>
         <Box className='px-5'>
           <Box textAlign="center" component="div">
-            {userRole === "0" ? <Button onClick={() => setOpenModal(true)} >Create User</Button> : ""}
+            <Button>Profile</Button>
           </Box>
           <Box textAlign="center" component="div">
-            {userRole === "0" ? <Button   > <NavLink to="/userdashboard/userTable">Show Users</NavLink></Button> : ""}
+            {Role === 0 ? <Button onClick={() => setOpenModal(true)} >Create User</Button> : ""}
           </Box>
           <Box textAlign="center" component="div">
-            {userRole === "1" ? <Button>See Tickets</Button> : ""}
+            {Role === 0 ? <Button >  Show Users </Button> : ""}
           </Box>
           <Box textAlign="center" component="div">
-            {userRole === "2" ? <Button onClick={() => navigate('/userdashboard/raiseTicket')}>Raise Ticket</Button> : ""}
+            {Role === 1 ? <Button>See Tickets</Button> : ""}
+          </Box>
+          <Box textAlign="center" component="div">
+            <Button onClick={() => navigate('/userdashboard/raiseTicket')}>Raise Ticket</Button>
           </Box>
           <Box textAlign="center" component="div">
             <Button onClick={() => { navigate("/"); localStorage.removeItem("userRole") }}>Log Out</Button>

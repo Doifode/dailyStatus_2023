@@ -36,6 +36,11 @@ export interface IraiseTicket {
     image: string
 }
 
+export interface typeAction {
+    type: string,
+    payload: any
+}
+
 
 //yup validation 
 export const UserLogin_val = Yup.object({

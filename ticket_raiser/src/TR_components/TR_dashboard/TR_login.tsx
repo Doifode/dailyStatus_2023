@@ -17,15 +17,13 @@ export const TR_login = () => {
         role: 0
     }
     const LoginUser = (values: IUserLogin_Int) => {
-        console.log('userRoles', roles.find((i) => i.Username === values.userName && i.Password === values.passWord)?.Role)
-
         if (values.userName == 'yashD' && values.passWord == "yashD2304") {
             localStorage.setItem("userRole", JSON.stringify(0))
             navigate('/userdashboard')
         }
         if (roles.find((i) => i.Username === values.userName && i.Password === values.passWord)) {
             navigate('/userdashboard')
-            localStorage.setItem("userRole", JSON.stringify(roles.find((i) => i.Username === values.userName && i.Password === values.passWord)?.Role))
+            localStorage.setItem("userRole", JSON.stringify(roles.find((i) => i.Username === values.userName && i.Password === values.passWord)))
 
         }
 

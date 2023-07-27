@@ -1,9 +1,8 @@
-import React from 'react'
-import { Dialog, Box, Modal } from "@material-ui/core";
+import { Box, Modal } from "@material-ui/core";
 type dialoagProps = {
     open: boolean,
     children: any
-    onClose: any
+    onClose: () => void
 }
 
 export const TR_modal = (props: dialoagProps) => {
@@ -15,10 +14,8 @@ export const TR_modal = (props: dialoagProps) => {
                     <Box className="px-5 pb-3 mt-3 ticket_raise_form bg-white">
                         {children}
                     </Box>
-
                 </Box>
             </Modal>
-
         </>
     )
 }
