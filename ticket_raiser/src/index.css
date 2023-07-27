@@ -1,0 +1,23 @@
+* {
+  margin: 0%;
+  padding: 0%;
+}
+.bg_white {
+  background-color: red;
+}
+.center_div {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+.column_dir {
+  flex-direction: column !important;
+}
+.dropzone {
+  height: 100px;
+  width: 100%;
+}
+.ticket_raise_form {
+  height: auto;
+  width: 600px;
+}
